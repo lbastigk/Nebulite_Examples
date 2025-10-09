@@ -18,7 +18,89 @@ cd Nebulite
 This will take a while. Grab a coffee and let Nebulite handle the install. 
 The installation process will also run tests to see if the engine is working properly.
 
+If you are using VSCode, you may benefit from the language extension of the repository.
+See `./Languages/nebs/nebulite-script-vscode/`
+
+We can now initialize an empty renderer:
+```bash
+./bin/Nebulite
+```
+<p align="center">
+<img src="Images/Empty renderer.jpg" width=75%>
+</p>
+
 ## Making Objects
+
+The RenderObject class is a core component of Nebulite, representing a single renderable entity. They are defined via json/jsonc-files. 
+
+### Modifying the standardfile
+
+Inside the Nebulite directory, you can use
+```bash
+./bin/Nebulite standardfile renderobject
+```
+to generate a standard file `./Resources/Renderobjects/standard.jsonc`. Depending on the version of Nebulite, it may look like the following:
+```jsonc
+{
+    "id": 0,
+    "invokeSubscriptions": [
+        "all"
+    ],
+    "invokes": [],
+    "layer": 0,
+    "posX": 0,
+    "posY": 0,
+    "sprite": {
+        "link": "Resources/Sprites/TEST001P/001.bmp",
+        "sizeX": 32,
+        "sizeY": 32,
+        "spritesheet": {
+            "isSpritesheet": false,
+            "offsetX": 0,
+            "offsetY": 0,
+            "sizeX": 0,
+            "sizeY": 0
+        }
+    },
+    "text": {
+        "color": {
+            "A": 255,
+            "B": 255,
+            "G": 255,
+            "R": 255
+        },
+        "dx": 0.0,
+        "dy": 0.0,
+        "fontSize": 0,
+        "str": ""
+    }
+}
+```
+which we can spawn with:
+```bash
+./bin/Nebulite spawn './Resources/Renderobjects/standard.jsonc'
+```
+<p align="center">
+<img src="Images/Standard spawned.jpg" width=75%>
+</p>
+
+Note the litte red square at the top. That's our object. By modifying `posX` or `posY` inside the json file, and spawning the object again, we can move its position in the object container.
+
+### The ball
+
+todo
+
+### The walls
+
+todo
+
+### The paddles
+
+todo
+
+### The Scoreboard
+
+todo
 
 ## Making Rulesets
 
@@ -48,8 +130,6 @@ and modify their sprite to be on fire (functioncall on other: "sprite-modify sty
 ### Player movement with constrain
 
 ### Score count to string
-
-## Making objects
 
 ## Player-AI
 
