@@ -86,21 +86,212 @@ which we can spawn with:
 
 Note the litte red square at the top. That's our object. By modifying `posX` or `posY` inside the json file, and spawning the object again, we can move its position in the object container.
 
+We will not use any prebuild Renderobjects from the Nebulite repository. Instead, we make a new directoy
+```bash
+./Resources/Pong/
+```
+
+for the following files.
+
 ### The ball
 
-todo
+```bash
+./Resources/Pong/ball.jsonc
+```
+
+We keep the dimensions and sprite of the standardfile and add
+- invoke subscriptions
+- invokes
+- physical properties
+- variable for setup
+
+We may also remove the text properties, as we will not use them for this object.
+
+```jsonc
+{
+    "id": 0,
+    "invokeSubscriptions": [
+        "all"
+    ],
+    "invokes": [
+        "./Resources/Pong/ball_setup.jsonc",    // Sets the position according to render size
+        "./Resources/Pong/integrate_v.jsonc",   // Integrate velocity to position
+        "./Resources/Pong/bounce.jsonc",        // bounce on walls and paddles
+        "./Resources/Pong/respawn_left.jsonc",  // Respawn if out of bounds, increase score for Player right
+        "./Resources/Pong/respawn_right.jsonc"  // Respawn if out of bounds, increase score for Player left
+    ],
+    "layer": 0,
+    "physics": {
+        "vX": 4,
+        "vY": 3
+    },
+    "posX": 0,
+    "posY": 0,
+    "setup_done": 0,    // If the ball was positioned correctly
+    "sprite": {
+        "link": "Resources/Sprites/TEST001P/001.bmp",
+        "sizeX": 32,
+        "sizeY": 32,
+        "spritesheet": {
+            "isSpritesheet": false,
+            "offsetX": 0,
+            "offsetY": 0,
+            "sizeX": 0,
+            "sizeY": 0
+        }
+    }
+}
+```
 
 ### The walls
 
-todo
+```bash
+./Resources/Pong/wall_top.jsonc
+```
+
+```jsonc
+{
+    "id": 0,
+    "invokeSubscriptions": [
+        "all",
+        "bounce"    // Listens to the balls bounce ruleset
+    ],
+    "invokes": [
+        "./Resources/Pong/wall_setup_top.jsonc",    // Sets the position and size according to render size
+    ],
+    "layer": 0,
+    "posX": 0,
+    "posY": 0,
+    "setup_done": 0,    // If the wall was positioned correctly
+    "sprite": {
+        "link": "Resources/Sprites/TEST001P/001.bmp",
+        "sizeX": 32,
+        "sizeY": 32,
+        "spritesheet": {
+            "isSpritesheet": false,
+            "offsetX": 0,
+            "offsetY": 0,
+            "sizeX": 0,
+            "sizeY": 0
+        }
+    }
+}
+```
+
+-------
+
+```bash
+./Resources/Pong/wall_bottom.jsonc
+```
+
+```jsonc
+{
+    "id": 0,
+    "invokeSubscriptions": [
+        "all",
+        "bounce"    // Listens to the balls bounce ruleset
+    ],
+    "invokes": [
+        "./Resources/Pong/wall_setup_bottom.jsonc",    // Sets the position and size according to render size
+    ],
+    "layer": 0,
+    "posX": 0,
+    "posY": 0,
+    "setup_done": 0,    // If the wall was positioned correctly
+    "sprite": {
+        "link": "Resources/Sprites/TEST001P/001.bmp",
+        "sizeX": 32,
+        "sizeY": 32,
+        "spritesheet": {
+            "isSpritesheet": false,
+            "offsetX": 0,
+            "offsetY": 0,
+            "sizeX": 0,
+            "sizeY": 0
+        }
+    }
+}
+```
 
 ### The paddles
 
-todo
+```bash
+./Resources/Pong/paddle_left.jsonc
+```
+
+```jsonc
+{
+    "id": 0,
+    "invokeSubscriptions": [
+        "all",
+        "bounce"    // Listens to the balls bounce ruleset
+    ],
+    "invokes": [
+        "./Resources/Pong/paddle_setup_left.jsonc",     // Sets the position and size according to render size
+        "./Resources/Pong/movement_player_left.jsonc",  // w-s-Keys to velocity
+        "./Resources/Pong/integrate_v.jsonc"            // Integrate velocity to position
+    ],
+    "layer": 0,
+    "posX": 0,
+    "posY": 0,
+    "setup_done": 0,    // If the paddle was positioned correctly
+    "sprite": {
+        "link": "Resources/Sprites/TEST001P/001.bmp",
+        "sizeX": 32,
+        "sizeY": 32,
+        "spritesheet": {
+            "isSpritesheet": false,
+            "offsetX": 0,
+            "offsetY": 0,
+            "sizeX": 0,
+            "sizeY": 0
+        }
+    }
+}
+```
+
+-------
+
+```bash
+./Resources/Pong/paddle_right.jsonc
+```
+
+```jsonc
+{
+    "id": 0,
+    "invokeSubscriptions": [
+        "all",
+        "bounce"    // Listens to the balls bounce ruleset
+    ],
+    "invokes": [
+        "./Resources/Pong/paddle_setup_left.jsonc",     // Sets the position and size according to render size
+        "./Resources/Pong/movement_player_left.jsonc",  // up-down-Keys to velocity
+        "./Resources/Pong/integrate_v.jsonc"            // Integrate velocity to position
+    ],
+    "layer": 0,
+    "posX": 0,
+    "posY": 0,
+    "setup_done": 0,    // If the paddle was positioned correctly
+    "sprite": {
+        "link": "Resources/Sprites/TEST001P/001.bmp",
+        "sizeX": 32,
+        "sizeY": 32,
+        "spritesheet": {
+            "isSpritesheet": false,
+            "offsetX": 0,
+            "offsetY": 0,
+            "sizeX": 0,
+            "sizeY": 0
+        }
+    }
+}
+```
 
 ### The Scoreboard
 
-todo
+```bash
+./Resources/Pong/scoreboard.jsonc
+```
 
 ## Making Rulesets
 
@@ -127,6 +318,8 @@ and modify their sprite to be on fire (functioncall on other: "sprite-modify sty
 
 ### Complex Physics: Collisions
 
+### Setup based on display size
+
 ### Player movement with constrain
 
 ### Score count to string
@@ -134,5 +327,14 @@ and modify their sprite to be on fire (functioncall on other: "sprite-modify sty
 ## Player-AI
 
 ## Creating a scene
+
+```bash
+./Resources/pong.nebs
+```
+
+```bash
+set-res 640 400 3 # Creates a renderer with a resolution of 640x400, window 3 times as big
+spawn ... # TODO: Spawn all objects
+```
 
 ## Result
